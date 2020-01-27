@@ -68,7 +68,7 @@ def level_up_menu(con, header, player, menu_width, screen_width, screen_height):
     menu(con, header, options, menu_width, screen_width, screen_height)
 
 def skill_menu(con, header, player, menu_width, screen_width, screen_height):
-    options = ['Pick Abilities']
+    options = ['Pick Abilities Here when Coded']
 
     menu(con, header, options, menu_width, screen_width, screen_height)
 

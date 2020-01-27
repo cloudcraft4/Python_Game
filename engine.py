@@ -50,7 +50,9 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
         pickup = action.get('pickup')
         show_inventory = action.get('show_inventory')
         drop_inventory = action.get('drop_inventory')
+        show_skill = action.get('show_skill')
         inventory_index = action.get('inventory_index')
+        skill_index = action.get('skill_index')
         take_stairs = action.get('take_stairs')
         level_up = action.get('level_up')
         show_character_screen = action.get('show_character_screen')
@@ -97,6 +99,10 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
             previous_game_state = game_state
             game_state = GameStates.SHOW_INVENTORY
 
+        if show_skill:
+            previous_game_state = game_state
+            game_state = GameStates.SHOW_SKILL
+
         if drop_inventory:
             previous_game_state = game_state
             game_state = GameStates.DROP_INVENTORY
@@ -109,6 +115,11 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                 player_turn_results.extend(player.inventory.use(item, entities=entities, fov_map=fov_map))
             elif game_state == GameStates.DROP_INVENTORY:
                 player_turn_results.extend(player.inventory.drop_item(item))
+
+        if skill_index is not None and previous_game_state != GameStates.PLAYER_DEAD:
+
+            if game_state == GameStates.SHOW_SKILL:
+                print('hit gamestate show_skill')
 
         if take_stairs and game_state == GameStates.PLAYERS_TURN:
             for entity in entities:

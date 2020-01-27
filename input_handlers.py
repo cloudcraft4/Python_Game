@@ -50,7 +50,7 @@ def handle_player_turn_keys(key):
         return {'show_inventory': True}
 
     elif key_char == 's':
-        return {'show_skills': True}
+        return {'show_skill': True}
 
     elif key_char == 'd':
         return {'drop_inventory': True}
@@ -84,6 +84,9 @@ def handle_player_dead_keys(key):
 
     if key_char == 'i':
         return {'show_inventory': True}
+
+    if key_char == 's':
+        return {'show_skill': True}
 
     if key.vk == libtcod.KEY_ENTER and key.lalt:
         # Alt+Enter: toggle full screen
