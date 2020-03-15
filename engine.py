@@ -50,13 +50,14 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
         pickup = action.get('pickup')
         show_inventory = action.get('show_inventory')
         drop_inventory = action.get('drop_inventory')
-        show_skill = action.get('show_skill')
         inventory_index = action.get('inventory_index')
         take_stairs = action.get('take_stairs')
         level_up = action.get('level_up')
+        gain_skill = action.get('gain_skill')
         show_character_screen = action.get('show_character_screen')
         exit = action.get('exit')
         fullscreen = action.get('fullscreen')
+        show_skill = action.get('show_skill')
 
         left_click = mouse_action.get('left_click')
         right_click = mouse_action.get('right_click')
@@ -115,12 +116,6 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
             elif game_state == GameStates.DROP_INVENTORY:
                 player_turn_results.extend(player.inventory.drop_item(item))
 
-        if previous_game_state != GameStates.PLAYER_DEAD:
-
-            if game_state == GameStates.SHOW_SKILL:
-                print('hit gamestate show_skill')
-                game_state = previous_game_state
-
         if take_stairs and game_state == GameStates.PLAYERS_TURN:
             for entity in entities:
                 if entity.stairs and entity.x == player.x and entity.y == player.y:
@@ -133,6 +128,17 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
             else:
                 message_log.add_message(Message('There are no stairs here.', libtcod.yellow))
 
+        if gain_skill:
+            if gain_skill == 'Thorn Armor':
+                player.fighter.base_max_hp += 20
+                player.fighter.hp += 20
+            elif gain_skill == 'Regeneration':
+                player.fighter.base_power += 1
+            elif gain_skill == 'Firebreath':
+                player.fighter.base_defense += 1
+
+                game_state = previous_game_state
+
         if level_up:
             if level_up == 'hp':
                 player.fighter.base_max_hp += 20
@@ -142,7 +148,7 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
             elif level_up == 'def':
                 player.fighter.base_defense += 1
 
-            game_state = previous_game_state
+                game_state = GameStates.GAIN_SKILL
 
         if show_character_screen:
             previous_game_state = game_state
@@ -181,6 +187,7 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
             targeting = player_turn_result.get('targeting')
             targeting_cancelled = player_turn_result.get('targeting_cancelled')
             xp = player_turn_result.get('xp')
+            '''skill_used = player_turn_result.get('skill_used')'''
 
             if message:
                 message_log.add_message(message)
@@ -205,6 +212,9 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                 entities.append(item_dropped)
 
                 game_state = GameStates.ENEMY_TURN
+
+            '''if skill_used:
+                game_state = GameStates.ENEMY_TURN'''
 
             if equip:
                 equip_results = player.equipment.toggle_equip(equip)

@@ -47,6 +47,18 @@ def inventory_menu(con, header, player, inventory_width, screen_width, screen_he
 
     menu(con, header, options, inventory_width, screen_width, screen_height)
 
+def show_skill(con, header, player, inventory_width, screen_width, screen_height):
+    # show a menu with each item of the inventory as an option
+    if len(player.skill) == 0:
+        options = ['You have no skills.']
+    else:
+        options = []
+
+        for skill in player.skill:
+            options.append(skill.name)
+
+    menu(con, header, options, inventory_width, screen_width, screen_height)
+
 
 def main_menu(con, background_image, screen_width, screen_height):
     libtcod.image_blit_2x(background_image, 0, 0, 0)
@@ -68,7 +80,9 @@ def level_up_menu(con, header, player, menu_width, screen_width, screen_height):
     menu(con, header, options, menu_width, screen_width, screen_height)
 
 def skill_menu(con, header, player, menu_width, screen_width, screen_height):
-    options = ['Pick Abilities Here when Coded']
+    options = ['Firebreath',
+               'Thorn Armor',
+               'Regeneration']
 
     menu(con, header, options, menu_width, screen_width, screen_height)
 

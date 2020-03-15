@@ -11,3 +11,4 @@ class GameStates(Enum):
     LEVEL_UP = 7
     CHARACTER_SCREEN = 8
     SHOW_SKILL = 9
+    GAIN_SKILL = 10

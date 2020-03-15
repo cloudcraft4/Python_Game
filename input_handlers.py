@@ -2,6 +2,8 @@ import libtcodpy as libtcod
 
 from game_states import GameStates
 
+from game_messages import Message
+
 
 def handle_keys(key, game_state):
     if game_state == GameStates.PLAYERS_TURN:
@@ -14,8 +16,12 @@ def handle_keys(key, game_state):
         return handle_inventory_keys(key)
     elif game_state == GameStates.LEVEL_UP:
         return handle_level_up_menu(key)
+    elif game_state == GameStates.GAIN_SKILL:
+        return handle_gain_skill_menu(key)
     elif game_state == GameStates.CHARACTER_SCREEN:
         return handle_character_screen(key)
+    elif game_state == GameStates.SHOW_SKILL:
+        return handle_show_skill_list(key)
 
     return {}
 
@@ -137,6 +143,35 @@ def handle_level_up_menu(key):
             return {'level_up': 'str'}
         elif key_char == 'c':
             return {'level_up': 'def'}
+
+    return {}
+
+def handle_gain_skill_menu(key):
+    if key:
+        key_char = chr(key.c)
+
+        if key_char == 'a':
+            return {'gain_skill': 'Firebreath'}
+        elif key_char == 'b':
+            return {'gain_skill': 'Thorn Armor'}
+        elif key_char == 'c':
+            return {'gain_skill': 'Regeneration'}
+
+    return {}
+
+def handle_show_skill_list(key):
+    if key:
+        key_char = chr(key.c)
+
+        if key_char == 'a':
+            Message('You have used ability under A slot', libtcod.blue)
+            return {}
+        elif key_char == 'b':
+            Message('You have used ability under B slot', libtcod.blue)
+            return {}
+        elif key_char == 'c':
+            Message('You have used ability under C slot', libtcod.blue)
+            return {}
 
     return {}
 
