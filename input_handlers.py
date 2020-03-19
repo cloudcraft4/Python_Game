@@ -2,8 +2,6 @@ import libtcodpy as libtcod
 
 from game_states import GameStates
 
-from game_messages import Message
-
 
 def handle_keys(key, game_state):
     if game_state == GameStates.PLAYERS_TURN:
@@ -160,18 +158,17 @@ def handle_gain_skill_menu(key):
     return {}
 
 def handle_show_skill_list(key):
-    if key:
-        key_char = chr(key.c)
+    index = key.c - ord('a')
 
-        if key_char == 'a':
-            Message('You have used ability under A slot', libtcod.blue)
-            return {}
-        elif key_char == 'b':
-            Message('You have used ability under B slot', libtcod.blue)
-            return {}
-        elif key_char == 'c':
-            Message('You have used ability under C slot', libtcod.blue)
-            return {}
+    if index >= 0:
+        return {'inventory_index': index}
+
+    if key.vk == libtcod.KEY_ENTER and key.lalt:
+        # Alt+Enter: toggle full screen
+        return {'fullscreen': True}
+    elif key.vk == libtcod.KEY_ESCAPE:
+        # Exit the menu
+        return {'exit': True}
 
     return {}
 

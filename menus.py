@@ -47,14 +47,14 @@ def inventory_menu(con, header, player, inventory_width, screen_width, screen_he
 
     menu(con, header, options, inventory_width, screen_width, screen_height)
 
-def show_skill(con, header, player, inventory_width, screen_width, screen_height):
+def show_skill_menu(con, header, player, inventory_width, screen_width, screen_height):
     # show a menu with each item of the inventory as an option
-    if len(player.skill) == 0:
+    if len(player.skill_list.skills) == 0:
         options = ['You have no skills.']
     else:
         options = []
 
-        for skill in player.skill:
+        for skill in player.skill_list.skills:
             options.append(skill.name)
 
     menu(con, header, options, inventory_width, screen_width, screen_height)

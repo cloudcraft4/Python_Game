@@ -2,19 +2,18 @@ import libtcodpy as libtcod
 
 from game_messages import Message
 
-class skill_list:
+class SkillList:
     def __init__(self):
-        self.skill_list = []
+        self.skills = []
 
     def add_skill(self, skill):
         results = []
 
         results.append({
             'skill_added': skill,
-            'message': Message('You learned the ability {0}!'.format(skill.name), libtcod.blue)
+            'message': Message('You learned the ability {0}!'.format(skill), libtcod.blue)
         })
 
-           self.skill.append(skill)
+        self.skills.append(skill)
 
         return results
-

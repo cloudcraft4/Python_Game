@@ -5,6 +5,7 @@ from components.equippable import Equippable
 from components.fighter import Fighter
 from components.inventory import Inventory
 from components.level import Level
+from components.skill_list import SkillList
 
 from entity import Entity
 
@@ -20,7 +21,7 @@ from render_functions import RenderOrder
 
 
 def get_constants():
-    window_title = 'Roguelike Tutorial Revised'
+    window_title = 'Devious Dungeons'
 
     screen_width = 80
     screen_height = 50
@@ -85,9 +86,10 @@ def get_game_variables(constants):
     inventory_component = Inventory(26)
     level_component = Level()
     equipment_component = Equipment()
+    skill_list_component = SkillList()
     player = Entity(0, 0, '@', libtcod.white, 'Player', blocks=True, render_order=RenderOrder.ACTOR,
                     fighter=fighter_component, inventory=inventory_component, level=level_component,
-                    equipment=equipment_component)
+                    equipment=equipment_component, skill_list=skill_list_component)
     entities = [player]
 
     equippable_component = Equippable(EquipmentSlots.MAIN_HAND, power_bonus=2)

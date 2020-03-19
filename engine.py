@@ -10,6 +10,8 @@ from loader_functions.initialize_new_game import get_constants, get_game_variabl
 from loader_functions.data_loaders import load_game, save_game
 from menus import main_menu, message_box
 from render_functions import clear_all, render_all
+#from components.skill_list import SkillList
+from entity import Entity
 
 
 def play_game(player, entities, game_map, message_log, game_state, con, panel, constants):
@@ -130,14 +132,16 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
 
         if gain_skill:
             if gain_skill == 'Thorn Armor':
-                player.fighter.base_max_hp += 20
-                player.fighter.hp += 20
+                Thorn_Armor = Entity(0, 0, '*', libtcod.sky, 'Thorn Armor')
+                player.skill_list.add_skill(Thorn_Armor)
             elif gain_skill == 'Regeneration':
-                player.fighter.base_power += 1
+                Regeneration = Entity(0, 0, '*', libtcod.sky, 'Regeneration')
+                player.skill_list.add_skill(Regeneration)
             elif gain_skill == 'Firebreath':
-                player.fighter.base_defense += 1
+                Firebreath = Entity(0, 0, '*', libtcod.sky, 'Firebreath')
+                player.skill_list.add_skill(Firebreath)
 
-                game_state = previous_game_state
+            game_state = previous_game_state
 
         if level_up:
             if level_up == 'hp':
@@ -148,7 +152,7 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
             elif level_up == 'def':
                 player.fighter.base_defense += 1
 
-                game_state = GameStates.GAIN_SKILL
+            game_state = GameStates.GAIN_SKILL
 
         if show_character_screen:
             previous_game_state = game_state
@@ -165,7 +169,7 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                 player_turn_results.append({'targeting_cancelled': True})
 
         if exit:
-            if game_state in (GameStates.SHOW_INVENTORY, GameStates.DROP_INVENTORY, GameStates.CHARACTER_SCREEN):
+            if game_state in (GameStates.SHOW_INVENTORY, GameStates.DROP_INVENTORY, GameStates.CHARACTER_SCREEN, GameStates.SHOW_SKILL):
                 game_state = previous_game_state
             elif game_state == GameStates.TARGETING:
                 player_turn_results.append({'targeting_cancelled': True})
