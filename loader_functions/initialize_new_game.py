@@ -21,7 +21,7 @@ from render_functions import RenderOrder
 
 
 def get_constants():
-    window_title = 'Devious Dungeons'
+    window_title = 'Dawn of Man'
 
     screen_width = 80
     screen_height = 50
@@ -93,9 +93,9 @@ def get_game_variables(constants):
     entities = [player]
 
     equippable_component = Equippable(EquipmentSlots.MAIN_HAND, power_bonus=2)
-    dagger = Entity(0, 0, '-', libtcod.sky, 'Dagger', equippable=equippable_component)
-    player.inventory.add_item(dagger)
-    player.equipment.toggle_equip(dagger)
+    sharp_rock = Entity(0, 0, '-', libtcod.sky, 'Sharp Rock', equippable=equippable_component)
+    player.inventory.add_item(sharp_rock)
+    player.equipment.toggle_equip(sharp_rock)
 
     game_map = GameMap(constants['map_width'], constants['map_height'])
     game_map.make_map(constants['max_rooms'], constants['room_min_size'], constants['room_max_size'],

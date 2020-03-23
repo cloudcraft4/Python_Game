@@ -10,8 +10,8 @@ from loader_functions.initialize_new_game import get_constants, get_game_variabl
 from loader_functions.data_loaders import load_game, save_game
 from menus import main_menu, message_box
 from render_functions import clear_all, render_all
+
 #from components.skill_list import SkillList
-from entity import Entity
 
 
 def play_game(player, entities, game_map, message_log, game_state, con, panel, constants):
@@ -26,6 +26,8 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
     previous_game_state = game_state
 
     targeting_item = None
+
+    #targeting_skill = None
 
     while not libtcod.console_is_window_closed():
         libtcod.sys_check_for_event(libtcod.EVENT_KEY_PRESS | libtcod.EVENT_MOUSE, key, mouse)
@@ -53,6 +55,7 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
         show_inventory = action.get('show_inventory')
         drop_inventory = action.get('drop_inventory')
         inventory_index = action.get('inventory_index')
+        skill_index = action.get('skill_index')
         take_stairs = action.get('take_stairs')
         level_up = action.get('level_up')
         gain_skill = action.get('gain_skill')
@@ -60,7 +63,6 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
         exit = action.get('exit')
         fullscreen = action.get('fullscreen')
         show_skill = action.get('show_skill')
-
         left_click = mouse_action.get('left_click')
         right_click = mouse_action.get('right_click')
 
@@ -118,6 +120,14 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
             elif game_state == GameStates.DROP_INVENTORY:
                 player_turn_results.extend(player.inventory.drop_item(item))
 
+        if skill_index is not None and previous_game_state != GameStates.PLAYER_DEAD and skill_index < len(
+                player.skill_list.skills):
+            #Note-Figure out why I need the skill_index < len() thing.  I am getting 'false positives' when this is not here but why????
+            skill = player.skill_list.skills[skill_index]
+
+            if game_state == GameStates.SHOW_SKILL:
+                player_turn_results.extend(player.skill_list.use(skill, entities=entities, fov_map=fov_map))
+
         if take_stairs and game_state == GameStates.PLAYERS_TURN:
             for entity in entities:
                 if entity.stairs and entity.x == player.x and entity.y == player.y:
@@ -131,15 +141,12 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                 message_log.add_message(Message('There are no stairs here.', libtcod.yellow))
 
         if gain_skill:
-            if gain_skill == 'Thorn Armor':
-                Thorn_Armor = Entity(0, 0, '*', libtcod.sky, 'Thorn Armor')
-                player.skill_list.add_skill(Thorn_Armor)
-            elif gain_skill == 'Regeneration':
-                Regeneration = Entity(0, 0, '*', libtcod.sky, 'Regeneration')
-                player.skill_list.add_skill(Regeneration)
-            elif gain_skill == 'Firebreath':
-                Firebreath = Entity(0, 0, '*', libtcod.sky, 'Firebreath')
-                player.skill_list.add_skill(Firebreath)
+            if gain_skill == 'Cloak of Quills':
+                player.skill_list.create_skill('Quills')
+            elif gain_skill == 'Shoulder Charge':
+                player.skill_list.create_skill('Shoulder Charge')
+            elif gain_skill == 'Throw Rock':
+                player.skill_list.create_skill('Throw Rock')
 
             game_state = previous_game_state
 
@@ -162,9 +169,18 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
             if left_click:
                 target_x, target_y = left_click
 
+                '''if item_targeting:'''
+
                 item_use_results = player.inventory.use(targeting_item, entities=entities, fov_map=fov_map,
                                                         target_x=target_x, target_y=target_y)
                 player_turn_results.extend(item_use_results)
+
+                '''else if skill_targeting:
+
+                        skill_use_results = player.skill_menu.use(targeting_item, entities=entities, fov_map=fov_map,
+                                                        target_x=target_x, target_y=target_y)
+                        player_turn_results.extend(skill_use_results)'''
+
             elif right_click:
                 player_turn_results.append({'targeting_cancelled': True})
 
@@ -191,7 +207,7 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
             targeting = player_turn_result.get('targeting')
             targeting_cancelled = player_turn_result.get('targeting_cancelled')
             xp = player_turn_result.get('xp')
-            '''skill_used = player_turn_result.get('skill_used')'''
+            skill_used = player_turn_result.get('skill_used')
 
             if message:
                 message_log.add_message(message)
@@ -217,8 +233,8 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
 
                 game_state = GameStates.ENEMY_TURN
 
-            '''if skill_used:
-                game_state = GameStates.ENEMY_TURN'''
+            if skill_used:
+                game_state = GameStates.ENEMY_TURN
 
             if equip:
                 equip_results = player.equipment.toggle_equip(equip)

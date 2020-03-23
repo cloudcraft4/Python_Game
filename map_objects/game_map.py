@@ -130,16 +130,16 @@ class GameMap:
         number_of_items = randint(0, max_items_per_room)
 
         monster_chances = {
-            'orc': 80,
-            'troll': from_dungeon_level([[15, 3], [30, 5], [60, 7]], self.dungeon_level)
+            'wolf': 80,
+            'bear': from_dungeon_level([[15, 3], [30, 5], [60, 7]], self.dungeon_level)
         }
 
         item_chances = {
-            'healing_potion': 35,
-            'sword': from_dungeon_level([[5, 4]], self.dungeon_level),
+            'healing_herbs': 35,
+            'sharp_stick': from_dungeon_level([[5, 4]], self.dungeon_level),
             'shield': from_dungeon_level([[15, 8]], self.dungeon_level),
             'lightning_scroll': from_dungeon_level([[25, 4]], self.dungeon_level),
-            'fireball_scroll': from_dungeon_level([[25, 6]], self.dungeon_level),
+            'flaming_oil': from_dungeon_level([[25, 6]], self.dungeon_level),
             'confusion_scroll': from_dungeon_level([[10, 2]], self.dungeon_level)
         }
 
@@ -152,19 +152,19 @@ class GameMap:
             if not any([entity for entity in entities if entity.x == x and entity.y == y]):
                 monster_choice = random_choice_from_dict(monster_chances)
 
-                if monster_choice == 'orc':
+                if monster_choice == 'wolf':
                     fighter_component = Fighter(hp=20, defense=0, power=4, xp=35)
                     ai_component = BasicMonster()
                     skill_list_component = SkillList()
 
-                    monster = Entity(x, y, 'o', libtcod.desaturated_green, 'Orc', blocks=True,
+                    monster = Entity(x, y, 'w', libtcod.desaturated_green, 'Wolf', blocks=True,
                                      render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component, skill_list=skill_list_component)
                 else:
                     fighter_component = Fighter(hp=30, defense=2, power=8, xp=100)
                     ai_component = BasicMonster()
                     skill_list_component = SkillList()
 
-                    monster = Entity(x, y, 'T', libtcod.darker_green, 'Troll', blocks=True, fighter=fighter_component,
+                    monster = Entity(x, y, 'B', libtcod.darker_green, 'Bear', blocks=True, fighter=fighter_component,
                                      render_order=RenderOrder.ACTOR, ai=ai_component, skill_list=skill_list_component)
 
                 entities.append(monster)
@@ -176,21 +176,21 @@ class GameMap:
             if not any([entity for entity in entities if entity.x == x and entity.y == y]):
                 item_choice = random_choice_from_dict(item_chances)
 
-                if item_choice == 'healing_potion':
+                if item_choice == 'healing_herbs':
                     item_component = Item(use_function=heal, amount=40)
-                    item = Entity(x, y, '!', libtcod.violet, 'Healing Potion', render_order=RenderOrder.ITEM,
+                    item = Entity(x, y, '!', libtcod.violet, 'Healing Herbs', render_order=RenderOrder.ITEM,
                                   item=item_component)
-                elif item_choice == 'sword':
+                elif item_choice == 'sharp_stick':
                     equippable_component = Equippable(EquipmentSlots.MAIN_HAND, power_bonus=3)
-                    item = Entity(x, y, '/', libtcod.sky, 'Sword', equippable=equippable_component)
+                    item = Entity(x, y, '/', libtcod.sky, 'Sharp Stick', equippable=equippable_component)
                 elif item_choice == 'shield':
                     equippable_component = Equippable(EquipmentSlots.OFF_HAND, defense_bonus=1)
                     item = Entity(x, y, '[', libtcod.darker_orange, 'Shield', equippable=equippable_component)
-                elif item_choice == 'fireball_scroll':
+                elif item_choice == 'flaming_oil':
                     item_component = Item(use_function=cast_fireball, targeting=True, targeting_message=Message(
                         'Left-click a target tile for the fireball, or right-click to cancel.', libtcod.light_cyan),
                                           damage=25, radius=3)
-                    item = Entity(x, y, '#', libtcod.red, 'Fireball Scroll', render_order=RenderOrder.ITEM,
+                    item = Entity(x, y, '#', libtcod.red, 'Flaming Oil', render_order=RenderOrder.ITEM,
                                   item=item_component)
                 elif item_choice == 'confusion_scroll':
                     item_component = Item(use_function=cast_confuse, targeting=True, targeting_message=Message(

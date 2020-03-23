@@ -65,7 +65,7 @@ def main_menu(con, background_image, screen_width, screen_height):
 
     libtcod.console_set_default_foreground(0, libtcod.light_yellow)
     libtcod.console_print_ex(0, int(screen_width / 2), int(screen_height / 2) - 4, libtcod.BKGND_NONE, libtcod.CENTER,
-                             'Devious Dungeons')
+                             'Dawn of Man')
     libtcod.console_print_ex(0, int(screen_width / 2), int(screen_height - 2), libtcod.BKGND_NONE, libtcod.CENTER,
                              'By Matthew Staley')
 
@@ -80,9 +80,9 @@ def level_up_menu(con, header, player, menu_width, screen_width, screen_height):
     menu(con, header, options, menu_width, screen_width, screen_height)
 
 def skill_menu(con, header, player, menu_width, screen_width, screen_height):
-    options = ['Firebreath',
-               'Thorn Armor',
-               'Regeneration']
+    options = ['Throw Rock',
+               'Cloak of Quills',
+               'Shoulder Charge']
 
     menu(con, header, options, menu_width, screen_width, screen_height)
 

@@ -149,11 +149,11 @@ def handle_gain_skill_menu(key):
         key_char = chr(key.c)
 
         if key_char == 'a':
-            return {'gain_skill': 'Firebreath'}
+            return {'gain_skill': 'Throw Rock'}
         elif key_char == 'b':
-            return {'gain_skill': 'Thorn Armor'}
+            return {'gain_skill': 'Cloak of Quills'}
         elif key_char == 'c':
-            return {'gain_skill': 'Regeneration'}
+            return {'gain_skill': 'Shoulder Charge'}
 
     return {}
 
@@ -161,7 +161,7 @@ def handle_show_skill_list(key):
     index = key.c - ord('a')
 
     if index >= 0:
-        return {'inventory_index': index}
+        return {'skill_index': index}
 
     if key.vk == libtcod.KEY_ENTER and key.lalt:
         # Alt+Enter: toggle full screen
