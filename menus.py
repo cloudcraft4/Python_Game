@@ -80,9 +80,14 @@ def level_up_menu(con, header, player, menu_width, screen_width, screen_height):
     menu(con, header, options, menu_width, screen_width, screen_height)
 
 def skill_menu(con, header, player, menu_width, screen_width, screen_height):
-    options = ['Throw Rock',
-               'Cloak of Quills',
-               'Shoulder Charge']
+
+    if len(player.learnable_skills) == 0:
+        options = ['You cannot learn any skills.']
+    else:
+        options = []
+
+        for skill in player.learnable_skills:
+            options.append(skill)
 
     menu(con, header, options, menu_width, screen_width, screen_height)
 

@@ -87,9 +87,12 @@ def get_game_variables(constants):
     level_component = Level()
     equipment_component = Equipment()
     skill_list_component = SkillList()
+    learnable_skills_component = ['Shoulder Charge', 'Cloak of Quills', 'Throw Rock']
+
     player = Entity(0, 0, '@', libtcod.white, 'Player', blocks=True, render_order=RenderOrder.ACTOR,
                     fighter=fighter_component, inventory=inventory_component, level=level_component,
-                    equipment=equipment_component, skill_list=skill_list_component)
+                    equipment=equipment_component, skill_list=skill_list_component,
+                    learnable_skills=learnable_skills_component)
     entities = [player]
 
     equippable_component = Equippable(EquipmentSlots.MAIN_HAND, power_bonus=2)

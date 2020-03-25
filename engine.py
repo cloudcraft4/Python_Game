@@ -11,7 +11,6 @@ from loader_functions.data_loaders import load_game, save_game
 from menus import main_menu, message_box
 from render_functions import clear_all, render_all
 
-#from components.skill_list import SkillList
 
 
 def play_game(player, entities, game_map, message_log, game_state, con, panel, constants):
@@ -46,7 +45,7 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
 
         clear_all(con, entities)
 
-        action = handle_keys(key, game_state)
+        action = handle_keys(key, game_state, player)
         mouse_action = handle_mouse(mouse)
 
         move = action.get('move')
@@ -141,12 +140,7 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                 message_log.add_message(Message('There are no stairs here.', libtcod.yellow))
 
         if gain_skill:
-            if gain_skill == 'Cloak of Quills':
-                player.skill_list.create_skill('Quills')
-            elif gain_skill == 'Shoulder Charge':
-                player.skill_list.create_skill('Shoulder Charge')
-            elif gain_skill == 'Throw Rock':
-                player.skill_list.create_skill('Throw Rock')
+            player.skill_list.create_skill(player, gain_skill)
 
             game_state = previous_game_state
 

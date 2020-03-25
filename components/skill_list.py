@@ -1,17 +1,18 @@
 import libtcodpy as libtcod
-
 from game_messages import Message
 from entity import Entity
 
 from skill_functions import cast_throw_rock, cast_shoulder_charge, cast_quills
 from components.skills import Skills
 
+
+
 class SkillList:
     def __init__(self):
         self.skills = []
 
-    def add_skill(self, skill):
-        results = []
+    def add_skill(self, results, skill):
+
 
         results.append({
             'skill_added': skill,
@@ -40,22 +41,22 @@ class SkillList:
 
         return results
 
-    def create_skill(self, skill_name, **kwargs):
-        #results = []
+    def create_skill(self, character, skill_name, **kwargs):
+        results = []
 
         if skill_name == 'Cloak of Quills':
             skill_component = Skills(use_function=cast_quills, damage=40, maximum_range=5)
             Quills = Entity(0, 0, '*', libtcod.sky, 'Cloak of Quills', skill=skill_component)
-            player.skill_list.add_skill(Quills)
+            character.skill_list.add_skill(results, Quills)
 
         elif skill_name == 'Shoulder Charge':
             skill_component = Skills(use_function=cast_shoulder_charge, damage=40, maximum_range=5)
             Shoulder_Charge = Entity(0, 0, '*', libtcod.sky, 'Shoulder Charge', skill=skill_component)
-            player.skill_list.add_skill(Shoulder_Charge)
+            character.skill_list.add_skill(results, Shoulder_Charge)
 
         elif skill_name == 'Throw Rock':
             skill_component = Skills(use_function=cast_throw_rock, damage=40, maximum_range=5)
             Throw_Rock = Entity(0, 0, '*', libtcod.sky, 'Throw Rock', skill=skill_component)
-            player.skill_list.add_skill(Throw_Rock)
+            character.skill_list.add_skill(results, Throw_Rock)
 
-        #return results
+        return results

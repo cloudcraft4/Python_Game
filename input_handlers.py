@@ -3,7 +3,7 @@ import libtcodpy as libtcod
 from game_states import GameStates
 
 
-def handle_keys(key, game_state):
+def handle_keys(key, game_state, player):
     if game_state == GameStates.PLAYERS_TURN:
         return handle_player_turn_keys(key)
     elif game_state == GameStates.PLAYER_DEAD:
@@ -15,7 +15,7 @@ def handle_keys(key, game_state):
     elif game_state == GameStates.LEVEL_UP:
         return handle_level_up_menu(key)
     elif game_state == GameStates.GAIN_SKILL:
-        return handle_gain_skill_menu(key)
+        return handle_gain_skill_menu(key, player)
     elif game_state == GameStates.CHARACTER_SCREEN:
         return handle_character_screen(key)
     elif game_state == GameStates.SHOW_SKILL:
@@ -144,16 +144,21 @@ def handle_level_up_menu(key):
 
     return {}
 
-def handle_gain_skill_menu(key):
-    if key:
-        key_char = chr(key.c)
+def handle_gain_skill_menu(key, player):
 
-        if key_char == 'a':
-            return {'gain_skill': 'Throw Rock'}
-        elif key_char == 'b':
-            return {'gain_skill': 'Cloak of Quills'}
-        elif key_char == 'c':
-            return {'gain_skill': 'Shoulder Charge'}
+    options = []
+
+    for skill in player.learnable_skills:
+        options.append(skill)
+
+    length_str = str(len(options))
+
+    if key and key.c - 49 <= ord(length_str) and key.c > 0:
+
+        key_char = chr(key.c - 49)
+
+        choice = options[int(key_char)]
+        return {'gain_skill': choice}
 
     return {}
 

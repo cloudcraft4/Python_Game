@@ -37,6 +37,7 @@ def cast_quills(*args, **kwargs):
     damage = kwargs.get('damage')
 
     results = []
+
 def cast_shoulder_charge(*args, **kwargs):
     caster = args[0]
     entities = kwargs.get('entities')
