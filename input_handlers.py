@@ -153,7 +153,7 @@ def handle_gain_skill_menu(key, player):
 
     length_str = str(len(options))
 
-    if key and key.c - 49 <= ord(length_str) and key.c > 0:
+    if key and key.c - 49 <= ord(length_str) and key.c > 96:
 
         key_char = chr(key.c - 49)
 

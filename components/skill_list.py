@@ -49,14 +49,23 @@ class SkillList:
             Quills = Entity(0, 0, '*', libtcod.sky, 'Cloak of Quills', skill=skill_component)
             character.skill_list.add_skill(results, Quills)
 
+            player.learnable_skills.remove('Cloak of Quills')
+            player.learnable_skills.append('Cloak of Quills 2')
+
         elif skill_name == 'Shoulder Charge':
             skill_component = Skills(use_function=cast_shoulder_charge, damage=40, maximum_range=5)
             Shoulder_Charge = Entity(0, 0, '*', libtcod.sky, 'Shoulder Charge', skill=skill_component)
             character.skill_list.add_skill(results, Shoulder_Charge)
 
+            character.learnable_skills.remove('Shoulder Charge')
+            character.learnable_skills.append('Shoulder Charge 2')
+
         elif skill_name == 'Throw Rock':
             skill_component = Skills(use_function=cast_throw_rock, damage=40, maximum_range=5)
             Throw_Rock = Entity(0, 0, '*', libtcod.sky, 'Throw Rock', skill=skill_component)
             character.skill_list.add_skill(results, Throw_Rock)
+
+            character.learnable_skills.remove('Throw Rock')
+            character.learnable_skills.append('Throw Rock 2')
 
         return results
