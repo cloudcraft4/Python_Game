@@ -32,7 +32,7 @@ class SkillList:
             results.append({'message': Message(' {0} cannot be activated'.format(skill_entity.name), libtcod.yellow)})
         else:
             if skill_component.targeting and not (kwargs.get('target_x') or kwargs.get('target_y')):
-                results.append({'targeting': item_entity})
+                results.append({'targeting_s': skill_entity})
             else:
                 kwargs = {**skill_component.function_kwargs, **kwargs}
                 skill_use_results = skill_component.use_function(self.owner, **kwargs)
@@ -49,8 +49,8 @@ class SkillList:
             Quills = Entity(0, 0, '*', libtcod.sky, 'Cloak of Quills', skill=skill_component)
             character.skill_list.add_skill(results, Quills)
 
-            player.learnable_skills.remove('Cloak of Quills')
-            player.learnable_skills.append('Cloak of Quills 2')
+            character.learnable_skills.remove('Cloak of Quills')
+            character.learnable_skills.append('Cloak of Quills 2')
 
         elif skill_name == 'Shoulder Charge':
             skill_component = Skills(use_function=cast_shoulder_charge, damage=40, maximum_range=5)
@@ -61,7 +61,8 @@ class SkillList:
             character.learnable_skills.append('Shoulder Charge 2')
 
         elif skill_name == 'Throw Rock':
-            skill_component = Skills(use_function=cast_throw_rock, damage=40, maximum_range=5)
+            skill_component = Skills(use_function=cast_throw_rock, damage=40, maximum_range=3, targeting=True,
+                                     targeting_message=Message('Left-click on a enemy to throw rock, or right-click to cancel.'))
             Throw_Rock = Entity(0, 0, '*', libtcod.sky, 'Throw Rock', skill=skill_component)
             character.skill_list.add_skill(results, Throw_Rock)
 

@@ -26,7 +26,7 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
 
     targeting_item = None
 
-    #targeting_skill = None
+    targeting_skill = None
 
     while not libtcod.console_is_window_closed():
         libtcod.sys_check_for_event(libtcod.EVENT_KEY_PRESS | libtcod.EVENT_MOUSE, key, mouse)
@@ -121,7 +121,7 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
 
         if skill_index is not None and previous_game_state != GameStates.PLAYER_DEAD and skill_index < len(
                 player.skill_list.skills):
-            #Note-Figure out why I need the skill_index < len() thing.  I am getting 'false positives' when this is not here but why????
+
             skill = player.skill_list.skills[skill_index]
 
             if game_state == GameStates.SHOW_SKILL:
@@ -141,7 +141,6 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
 
         if gain_skill:
             player.skill_list.create_skill(player, gain_skill)
-
             game_state = previous_game_state
 
         if level_up:
@@ -153,7 +152,10 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
             elif level_up == 'def':
                 player.fighter.base_defense += 1
 
-            game_state = GameStates.GAIN_SKILL
+            if len(player.learnable_skills) > 0:
+                game_state = GameStates.GAIN_SKILL
+            else:
+                game_state = previous_game_state
 
         if show_character_screen:
             previous_game_state = game_state
@@ -163,17 +165,17 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
             if left_click:
                 target_x, target_y = left_click
 
-                '''if item_targeting:'''
+                if item_targeting:
 
-                item_use_results = player.inventory.use(targeting_item, entities=entities, fov_map=fov_map,
+                    item_use_results = player.inventory.use(targeting_item, entities=entities, fov_map=fov_map,
                                                         target_x=target_x, target_y=target_y)
-                player_turn_results.extend(item_use_results)
+                    player_turn_results.extend(item_use_results)
 
-                '''else if skill_targeting:
+                elif skill_targeting:
 
-                        skill_use_results = player.skill_menu.use(targeting_item, entities=entities, fov_map=fov_map,
+                    skill_use_results = player.skill_menu.use(targeting_skill, entities=entities, fov_map=fov_map,
                                                         target_x=target_x, target_y=target_y)
-                        player_turn_results.extend(skill_use_results)'''
+                    player_turn_results.extend(skill_use_results)
 
             elif right_click:
                 player_turn_results.append({'targeting_cancelled': True})
@@ -198,7 +200,8 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
             item_consumed = player_turn_result.get('consumed')
             item_dropped = player_turn_result.get('item_dropped')
             equip = player_turn_result.get('equip')
-            targeting = player_turn_result.get('targeting')
+            targeting_i = player_turn_result.get('targeting')
+            targeting_s = player_turn_result.get('targeting')
             targeting_cancelled = player_turn_result.get('targeting_cancelled')
             xp = player_turn_result.get('xp')
             skill_used = player_turn_result.get('skill_used')
@@ -245,13 +248,22 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
 
                 game_state = GameStates.ENEMY_TURN
 
-            if targeting:
+            if targeting_i:
                 previous_game_state = GameStates.PLAYERS_TURN
                 game_state = GameStates.TARGETING
 
-                targeting_item = targeting
+                targeting_item = targeting_i
 
                 message_log.add_message(targeting_item.item.targeting_message)
+
+            if targeting_s:
+                previous_game_state = GameStates.PLAYERS_TURN
+                game_state = GameStates.TARGETING
+
+                targeting_skill = targeting_s
+
+            # message_log.add_message(targeting_skill.skill.targeting_message)
+            # Message likely does not work yet.  TO DO later
 
             if targeting_cancelled:
                 game_state = previous_game_state
