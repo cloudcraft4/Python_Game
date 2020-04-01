@@ -19,16 +19,25 @@ def cast_throw_rock(*args, **kwargs):
         return results
 
     for entity in entities:
-        if entity.distance(target_x, target_y) <= maximum_range:
-            results.append({'message': Message('The rock hits the {0} and damages it for {1} hit points.'.format(entity.name, damage), libtcod.orange)})
-            results.extend(entity.fighter.take_damage(damage))
+        if entity.x == target_x and entity.y == target_y and entity.fighter:
+            if entity.distance(target_x, target_y) <= maximum_range:
+                results.append({'skill_used': True, 'message': Message('The rock hits the {0} and damages it for {1} hit points.'.format(entity.name, damage), libtcod.orange)})
+                results.extend(entity.fighter.take_damage(damage))
+                break
+                #TODO test the skill_used part
 
-        else:
-            results.append({'message': Message('You cannot hit anything that far away!', libtcod.orange)})
+            else:
+                results.append({'message': Message('You cannot hit anything that far away!', libtcod.orange)})
+                break
+
+        elif entity.x == target_x and entity.y == target_y:
+            results.append({'message': Message('Invalid target.', libtcod.orange)})
+            break
 
     return results
 
 def cast_quills(*args, **kwargs):
+    # TODO this skill has been coded (not tested at all).  It is never being called at moment.  Delete old way if this works.
     results = []
 
     if kwargs.get('attacker') is not None and kwargs.get('damage') is not None:
@@ -56,6 +65,7 @@ def cast_quills(*args, **kwargs):
     return results
 
 def cast_shoulder_charge(*args, **kwargs):
+    # TODO Need to impiment shoulder charge.  Not totally sure even on design
     '''Design idea- Cardinal Directions.  Move 3(?) spaces in that direction.  Bonus attack if you hit someone.  Use case: Rapidly approach dangerous enemies.
     Also run away from other enemies.  Is this WAAAAY too powerful with running away from enemies?  Maybe disable stair dancing entirely.
 

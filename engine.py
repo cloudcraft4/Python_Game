@@ -165,15 +165,15 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
             if left_click:
                 target_x, target_y = left_click
 
-                if item_targeting:
+                if targeting_for_item:
 
                     item_use_results = player.inventory.use(targeting_item, entities=entities, fov_map=fov_map,
                                                         target_x=target_x, target_y=target_y)
                     player_turn_results.extend(item_use_results)
 
-                elif skill_targeting:
+                elif targeting_for_skill:
 
-                    skill_use_results = player.skill_menu.use(targeting_skill, entities=entities, fov_map=fov_map,
+                    skill_use_results = player.skill_list.use(targeting_skill, entities=entities, fov_map=fov_map,
                                                         target_x=target_x, target_y=target_y)
                     player_turn_results.extend(skill_use_results)
 
@@ -200,11 +200,12 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
             item_consumed = player_turn_result.get('consumed')
             item_dropped = player_turn_result.get('item_dropped')
             equip = player_turn_result.get('equip')
-            targeting_i = player_turn_result.get('targeting')
-            targeting_s = player_turn_result.get('targeting')
+            targeting_for_item = player_turn_result.get('targeting_for_item')
+            targeting_for_skill = player_turn_result.get('targeting_for_skill')
             targeting_cancelled = player_turn_result.get('targeting_cancelled')
             xp = player_turn_result.get('xp')
             skill_used = player_turn_result.get('skill_used')
+            # TODO skill_used not used properly!
 
             if message:
                 message_log.add_message(message)
@@ -248,22 +249,22 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
 
                 game_state = GameStates.ENEMY_TURN
 
-            if targeting_i:
+            if targeting_for_item:
                 previous_game_state = GameStates.PLAYERS_TURN
                 game_state = GameStates.TARGETING
 
-                targeting_item = targeting_i
+                targeting_item = targeting_for_item
 
                 message_log.add_message(targeting_item.item.targeting_message)
 
-            if targeting_s:
+            if targeting_for_skill:
                 previous_game_state = GameStates.PLAYERS_TURN
                 game_state = GameStates.TARGETING
 
-                targeting_skill = targeting_s
+                targeting_skill = targeting_for_skill
 
+            # TODO fix messaging.  Do skills have targeting messages???
             # message_log.add_message(targeting_skill.skill.targeting_message)
-            # Message likely does not work yet.  TO DO later
 
             if targeting_cancelled:
                 game_state = previous_game_state

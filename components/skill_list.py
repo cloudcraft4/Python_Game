@@ -10,6 +10,7 @@ from components.skills import Skills
 class SkillList:
     def __init__(self):
         self.skills = []
+        self.owner = self
 
     def add_skill(self, results, skill):
 
@@ -38,6 +39,9 @@ class SkillList:
                 skill_use_results = skill_component.use_function(self.owner, **kwargs)
 
                 results.extend(skill_use_results)
+
+                # TODO fix this.  Why is it 'player_turn_results' in engine but just results here?)
+                #results.append({'skill_used'})
 
         return results
 
