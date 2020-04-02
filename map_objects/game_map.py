@@ -9,18 +9,18 @@ from components.item import Item
 from components.stairs import Stairs
 from components.skill_list import SkillList
 
-from entity import Entity
+from core.entity import Entity
 
-from game_messages import Message
+from core.game_messages import Message
 
-from item_functions import cast_confuse, cast_fireball, cast_lightning, heal
+from core.item_functions import cast_confuse, cast_fireball, cast_lightning, heal
 
 from map_objects.rectangle import Rect
 from map_objects.tile import Tile
 
-from random_utils import from_dungeon_level, random_choice_from_dict
+from core.random_utils import from_dungeon_level, random_choice_from_dict
 
-from render_functions import RenderOrder
+from core.render_functions import RenderOrder
 
 
 class GameMap:

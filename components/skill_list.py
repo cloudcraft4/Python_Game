@@ -1,8 +1,8 @@
 import libtcodpy as libtcod
-from game_messages import Message
-from entity import Entity
+from core.game_messages import Message
+from core.entity import Entity
 
-from skill_functions import cast_throw_rock, cast_shoulder_charge, cast_quills
+from core.skill_functions import cast_throw_rock, cast_shoulder_charge, cast_quills
 from components.skills import Skills
 
 

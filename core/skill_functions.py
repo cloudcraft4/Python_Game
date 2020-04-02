@@ -1,7 +1,7 @@
 import libtcodpy as libtcod
 
-from game_messages import Message
-from game_states import GameStates
+from core.game_messages import Message
+from core.game_states import GameStates
 
 
 def cast_throw_rock(*args, **kwargs):
@@ -35,6 +35,7 @@ def cast_throw_rock(*args, **kwargs):
             break
 
     return results
+
 
 def cast_quills(*args, **kwargs):
     # TODO this skill has been coded (not tested at all).  It is never being called at moment.  Delete old way if this works.

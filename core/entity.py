@@ -4,7 +4,7 @@ import math
 
 from components.item import Item
 
-from render_functions import RenderOrder
+from core.render_functions import RenderOrder
 
 
 class Entity:

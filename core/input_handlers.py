@@ -1,6 +1,6 @@
 import libtcodpy as libtcod
 
-from game_states import GameStates
+from core.game_states import GameStates
 
 
 def handle_keys(key, game_state, player):

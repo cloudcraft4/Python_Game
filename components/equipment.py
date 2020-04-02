@@ -1,4 +1,4 @@
-from equipment_slots import EquipmentSlots
+from core.equipment_slots import EquipmentSlots
 
 
 class Equipment:

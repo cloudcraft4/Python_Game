@@ -2,7 +2,7 @@ import libtcodpy as libtcod
 
 from components.ai import ConfusedMonster
 
-from game_messages import Message
+from core.game_messages import Message
 
 
 def heal(*args, **kwargs):

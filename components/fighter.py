@@ -1,6 +1,6 @@
 import libtcodpy as libtcod
 
-from game_messages import Message
+from core.game_messages import Message
 
 
 

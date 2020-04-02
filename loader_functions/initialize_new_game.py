@@ -7,17 +7,17 @@ from components.inventory import Inventory
 from components.level import Level
 from components.skill_list import SkillList
 
-from entity import Entity
+from core.entity import Entity
 
-from equipment_slots import EquipmentSlots
+from core.equipment_slots import EquipmentSlots
 
-from game_messages import MessageLog
+from core.game_messages import MessageLog
 
-from game_states import GameStates
+from core.game_states import GameStates
 
 from map_objects.game_map import GameMap
 
-from render_functions import RenderOrder
+from core.render_functions import RenderOrder
 
 
 def get_constants():
