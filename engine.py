@@ -10,6 +10,7 @@ from loader_functions.initialize_new_game import get_constants, get_game_variabl
 from loader_functions.data_loaders import load_game, save_game
 from core.menus import main_menu, message_box
 from core.render_functions import clear_all, render_all
+from map_objects.game_map import GameMap
 
 
 def play_game(player: object, entities: object, game_map: object, message_log: object, game_state: object, con: object, panel: object, constants: object) -> object:
@@ -311,7 +312,9 @@ def play_game(player: object, entities: object, game_map: object, message_log: o
 def main():
     constants = get_constants()
 
-    libtcod.console_set_custom_font('arial10x10.png', libtcod.FONT_TYPE_GREYSCALE | libtcod.FONT_LAYOUT_TCOD)
+    # TODO (original) libtcod.console_set_custom_font('arial10x10.png', libtcod.FONT_TYPE_GREYSCALE | libtcod.FONT_LAYOUT_TCOD)
+    # The font has 32 chars in a row, and there's a total of 10 rows. Increase the "10" when you add new rows to the sample font file
+    libtcod.console_set_custom_font('custom_tileset.png', libtcod.FONT_TYPE_GREYSCALE | libtcod.FONT_LAYOUT_TCOD, 32, 10)
 
     libtcod.console_init_root(constants['screen_width'], constants['screen_height'], constants['window_title'], False)
 
@@ -324,6 +327,9 @@ def main():
     message_log = None
     game_state = None
 
+    #TODO get better place for this
+
+    GameMap.load_customfont()
     show_main_menu = True
     show_load_error_message = False
 

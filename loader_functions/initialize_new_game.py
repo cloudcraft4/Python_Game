@@ -6,6 +6,7 @@ from components.fighter import Fighter
 from components.inventory import Inventory
 from components.level import Level
 from components.skill_list import SkillList
+from components.custom_tiles import CustomTile
 
 from core.entity import Entity
 
@@ -89,7 +90,7 @@ def get_game_variables(constants):
     skill_list_component = SkillList()
     learnable_skills_component = ['Shoulder Charge', 'Cloak of Quills', 'Throw Rock']
 
-    player = Entity(0, 0, '@', libtcod.white, 'Player', blocks=True, render_order=RenderOrder.ACTOR,
+    player = Entity(0, 0, CustomTile.PLAYER0, libtcod.white, 'Player', blocks=True, render_order=RenderOrder.ACTOR,
                     fighter=fighter_component, inventory=inventory_component, level=level_component,
                     equipment=equipment_component, skill_list=skill_list_component,
                     learnable_skills=learnable_skills_component)

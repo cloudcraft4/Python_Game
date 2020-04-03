@@ -8,6 +8,7 @@ from components.fighter import Fighter
 from components.item import Item
 from components.stairs import Stairs
 from components.skill_list import SkillList
+from components.custom_tiles import CustomTile
 
 from core.entity import Entity
 
@@ -157,7 +158,7 @@ class GameMap:
                     ai_component = BasicMonster()
                     skill_list_component = SkillList()
 
-                    monster = Entity(x, y, 'w', libtcod.desaturated_green, 'Wolf', blocks=True,
+                    monster = Entity(x, y, CustomTile.WOLF0, libtcod.white, 'Wolf', blocks=True,
                                      render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component, skill_list=skill_list_component)
                 else:
                     fighter_component = Fighter(hp=30, defense=2, power=8, xp=100)
@@ -178,7 +179,7 @@ class GameMap:
 
                 if item_choice == 'healing_herbs':
                     item_component = Item(use_function=heal, amount=40)
-                    item = Entity(x, y, '!', libtcod.violet, 'Healing Herbs', render_order=RenderOrder.ITEM,
+                    item = Entity(x, y, CustomTile.HEALING_HERBS, libtcod.white, 'Healing Herbs', render_order=RenderOrder.ITEM,
                                   item=item_component)
                 elif item_choice == 'sharp_stick':
                     equippable_component = Equippable(EquipmentSlots.MAIN_HAND, power_bonus=3)
@@ -223,3 +224,13 @@ class GameMap:
         message_log.add_message(Message('You take a moment to rest, and recover your strength.', libtcod.light_violet))
 
         return entities
+
+# TODO Get custom fonts to work
+    def load_customfont():
+        # The index of the first custom tile in the file
+        a = 256
+
+        # The "y" is the row index, here we load the sixth row in the font file. Increase the "6" to load any new rows from the file
+        for y in range(5, 6):
+            libtcod.console_map_ascii_codes_to_font(a, 32, 0, y)
+            a += 32

@@ -1,0 +1,15 @@
+
+
+class CustomTile:
+
+    PLAYER0 = 256
+    PLAYER1 = 257
+    WOLF0 = 258
+    WOLF1 = 259
+    HEALING_HERBS = 260
+    SKULL = 261
+    BEAR = 262
+    SHARP_STICK = 263
+    SHIELD = 264
+    STAIRSDOWN = 265
+    DAGGER = 266

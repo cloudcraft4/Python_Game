@@ -5,6 +5,7 @@ from core.game_messages import Message
 from core.game_states import GameStates
 
 from core.render_functions import RenderOrder
+from components.custom_tiles import CustomTile
 
 
 def kill_player(player):
@@ -17,8 +18,8 @@ def kill_player(player):
 def kill_monster(monster):
     death_message = Message('{0} is dead!'.format(monster.name.capitalize()), libtcod.orange)
 
-    monster.char = '%'
-    monster.color = libtcod.dark_red
+    monster.char = CustomTile.SKULL
+    monster.color = libtcod.white
     monster.blocks = False
     monster.fighter = None
     monster.ai = None
