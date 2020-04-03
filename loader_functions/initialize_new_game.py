@@ -97,7 +97,7 @@ def get_game_variables(constants):
     entities = [player]
 
     equippable_component = Equippable(EquipmentSlots.MAIN_HAND, power_bonus=2)
-    sharp_rock = Entity(0, 0, '-', libtcod.sky, 'Sharp Rock', equippable=equippable_component)
+    sharp_rock = Entity(0, 0, CustomTile.SHARP_ROCK, libtcod.sky, 'Sharp Rock', equippable=equippable_component)
     player.inventory.add_item(sharp_rock)
     player.equipment.toggle_equip(sharp_rock)
 

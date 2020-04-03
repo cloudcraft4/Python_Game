@@ -8,8 +8,9 @@ class CustomTile:
     WOLF1 = 259
     HEALING_HERBS = 260
     SKULL = 261
-    BEAR = 262
-    SHARP_STICK = 263
-    SHIELD = 264
-    STAIRSDOWN = 265
-    DAGGER = 266
+    BEAR0 = 262
+    BEAR1 = 263
+    SHARP_STICK = 264
+    FIRE_OIL = 265
+    SHARP_ROCK = 266
+    DOWN_ARROW = 267

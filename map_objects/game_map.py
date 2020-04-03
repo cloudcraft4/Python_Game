@@ -99,7 +99,7 @@ class GameMap:
                 num_rooms += 1
 
         stairs_component = Stairs(self.dungeon_level + 1)
-        down_stairs = Entity(center_of_last_room_x, center_of_last_room_y, '>', libtcod.white, 'Stairs',
+        down_stairs = Entity(center_of_last_room_x, center_of_last_room_y, CustomTile.DOWN_ARROW, libtcod.white, 'Stairs',
                              render_order=RenderOrder.STAIRS, stairs=stairs_component)
         entities.append(down_stairs)
 
@@ -140,7 +140,7 @@ class GameMap:
             'sharp_stick': from_dungeon_level([[5, 4]], self.dungeon_level),
             'shield': from_dungeon_level([[15, 8]], self.dungeon_level),
             'lightning_scroll': from_dungeon_level([[25, 4]], self.dungeon_level),
-            'flaming_oil': from_dungeon_level([[25, 6]], self.dungeon_level),
+            'fire_oil': from_dungeon_level([[25, 6]], self.dungeon_level),
             'confusion_scroll': from_dungeon_level([[10, 2]], self.dungeon_level)
         }
 
@@ -165,7 +165,7 @@ class GameMap:
                     ai_component = BasicMonster()
                     skill_list_component = SkillList()
 
-                    monster = Entity(x, y, 'B', libtcod.darker_green, 'Bear', blocks=True, fighter=fighter_component,
+                    monster = Entity(x, y, CustomTile.BEAR0, libtcod.white, 'Bear', blocks=True, fighter=fighter_component,
                                      render_order=RenderOrder.ACTOR, ai=ai_component, skill_list=skill_list_component)
 
                 entities.append(monster)
@@ -183,15 +183,15 @@ class GameMap:
                                   item=item_component)
                 elif item_choice == 'sharp_stick':
                     equippable_component = Equippable(EquipmentSlots.MAIN_HAND, power_bonus=3)
-                    item = Entity(x, y, '/', libtcod.sky, 'Sharp Stick', equippable=equippable_component)
+                    item = Entity(x, y, CustomTile.SHARP_STICK, libtcod.white, 'Sharp Stick', equippable=equippable_component)
                 elif item_choice == 'shield':
                     equippable_component = Equippable(EquipmentSlots.OFF_HAND, defense_bonus=1)
                     item = Entity(x, y, '[', libtcod.darker_orange, 'Shield', equippable=equippable_component)
-                elif item_choice == 'flaming_oil':
+                elif item_choice == 'fire_oil':
                     item_component = Item(use_function=cast_fireball, targeting=True, targeting_message=Message(
                         'Left-click a target tile for the fireball, or right-click to cancel.', libtcod.light_cyan),
                                           damage=25, radius=3)
-                    item = Entity(x, y, '#', libtcod.red, 'Flaming Oil', render_order=RenderOrder.ITEM,
+                    item = Entity(x, y, CustomTile.FIRE_OIL, libtcod.white, 'Fire Oil', render_order=RenderOrder.ITEM,
                                   item=item_component)
                 elif item_choice == 'confusion_scroll':
                     item_component = Item(use_function=cast_confuse, targeting=True, targeting_message=Message(
