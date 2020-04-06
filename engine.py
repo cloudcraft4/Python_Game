@@ -314,7 +314,7 @@ def main():
 
     # TODO (original) libtcod.console_set_custom_font('arial10x10.png', libtcod.FONT_TYPE_GREYSCALE | libtcod.FONT_LAYOUT_TCOD)
     # The font has 32 chars in a row, and there's a total of 10 rows. Increase the "10" when you add new rows to the sample font file
-    libtcod.console_set_custom_font('custom_tileset.png', libtcod.FONT_TYPE_GREYSCALE | libtcod.FONT_LAYOUT_TCOD, 32, 10)
+    libtcod.console_set_custom_font('custom_tileset_test.png', libtcod.FONT_TYPE_GREYSCALE | libtcod.FONT_LAYOUT_TCOD, 32, 10)
 
     libtcod.console_init_root(constants['screen_width'], constants['screen_height'], constants['window_title'], False)
 

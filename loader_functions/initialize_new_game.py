@@ -9,16 +9,14 @@ from components.skill_list import SkillList
 from components.custom_tiles import CustomTile
 
 from core.entity import Entity
-
 from core.equipment_slots import EquipmentSlots
-
 from core.game_messages import MessageLog
-
 from core.game_states import GameStates
+from core.render_functions import RenderOrder
 
 from map_objects.game_map import GameMap
 
-from core.render_functions import RenderOrder
+
 
 
 def get_constants():
